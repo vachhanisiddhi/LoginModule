@@ -1,64 +1,59 @@
 import React, { Component } from 'react';
-import { Text, View, Image, TextInput, TouchableOpacity, ToastAndroid, KeyboardAvoidingView } from 'react-native';
-import styles from '../Themes/Style'
-import Colors from '../Themes/Color';
-import Icon from 'react-native-vector-icons/FontAwesome'
+import { View, Text, SafeAreaView, Image, TouchableOpacity, ScrollView, TextInput, StatusBar } from 'react-native';
+import AppImages from '../Theme/image'
+import Style from '../Theme/Style'
+import Colors from '../Theme/Colors'
+import Fonts from '../Theme/CustomeFonts'
+import Toast from 'react-native-simple-toast'
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 export default class ForgotPassword extends Component {
-
-    state = {
-        email: ''
+    constructor(props) {
+        super(props);
+        this.state = {
+        };
     }
 
-    _forgotManage = () => {
-        if (this.state.email === '' || this.state.email === null) {
-            ToastAndroid.show('Please Enter Email', ToastAndroid.SHORT)
-        }
-        else if (!/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/.test(this.state.email)) {
-            ToastAndroid.show('Enter a valid email address', ToastAndroid.SHORT)
-        }
-        else {
-            ToastAndroid.show('Submit', ToastAndroid.SHORT)
-        }
+    ForgotPassword = async () => {
+
     }
 
     render() {
         return (
-            <View style={[styles.cointainer, styles.subCointainer, { margin: 5 }]}>
-                <KeyboardAvoidingView behavior='height' style={{ flex: 1 }}>
-                    <View style={{ justifyContent: 'center', flex: 1 }}>
+            <SafeAreaView style={Style.cointainer}>
+                <StatusBar backgroundColor={Colors.white} barStyle='dark-content' />
+                <ScrollView style={{ flex: 1 }} contentContainerStyle={{ flexGrow: 1 }}>
+                    <View style={{ margin: '5%', flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                         <Image
-                            source={require('../Images/forgot.png')}
-                            style={{height:150, width:250, alignSelf:'center'}}
+                            source={AppImages.logo}
+                            style={{ height: 150, width: 400 }}
                             resizeMode='contain'
                         />
-                        <Text style={[styles.screenHeading,{marginTop:30, alignSelf:'center'}]}>Forgot Password ?</Text>
-                        <Text style={[styles.linkText, { marginTop: 20, textAlign: 'center', }]}>
-                            {/* To recover Your Password, You need to enter Your registered email address. We will sent the recovery code to your email */}
-                            {/* Enter your email below to retrieve your account */}
-                            Confirm your email and we'll send the instructions.
-                        </Text>
-                        <View style={{ marginTop: 30 }}>
-                            <View style={styles.inputViewStyle}>
-                                <Icon name='envelope' size={22} color={Colors.iconColor} />
-                                <TextInput
-                                    style={styles.inputText}
-                                    onChangeText={(value) => this.setState({ email: value })}
-                                    value={this.state.email}
-                                    placeholder='Email'
-                                />
-                            </View>
+                        <Text style={{ width: '100%', fontFamily: Fonts.Poppins_Medium, fontSize: 22, marginTop: '5%' }}>
+                            Forgot Password</Text>
+
+                        <View style={Style.InputContainerrow}>
+                            <Icon name='mobile' type='evilicon' color={Colors.Theme_color} size={30} style={{ marginLeft: 10, marginRight: 10 }} />
+                            <TextInput
+                                style={[Style.inputTextStyle, { width: '90%' }]}
+                                placeholder='Mobile'
+                                onChangeText={text => this.setState({ email: text })}
+                                value={this.state.email}
+                                keyboardType='numeric'
+                                placeholderTextColor='grey'
+                                underlineColorAndroid='transparent'
+                            />
                         </View>
 
                         <TouchableOpacity
-                            style={styles.loginButton}
-                            onPress={() => this._forgotManage()}
-                        >
-                            <Text style={styles.buttonText}> Reset Password</Text>
+                            onPress={() => this.ForgotPassword()}
+                            style={[Style.buttonStyle, { width: '100%', marginTop: '10%', },]}>
+                            <Text style={Style.buttonText}>Reset</Text>
                         </TouchableOpacity>
+
                     </View>
-                </KeyboardAvoidingView>
-            </View>
+                </ScrollView>
+            </SafeAreaView>
         );
     }
 }
